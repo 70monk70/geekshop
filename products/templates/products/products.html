@@ -1,7 +1,3 @@
-{#В цикле for там, где добавляется картинка каждого товара, представление статики оставил статичным, так#}
-{#как при синтаксисе {% static 'product.img' %} изображения не подгружаются. Поэтому вопрос: как#}
-{#совместить динамическое объявление статики и placeholder в одном запросе?#}
-
 {% extends 'products/base.html' %}
 {% load static %}
 
@@ -21,7 +17,7 @@
             <h1 class="my-4">GeekShop</h1>
             <div class="list-group">
                 {% for category in categories %}
-                <a href="#" class="list-group-item">{{ category|title }}</a>
+                <a href="#" class="list-group-item">{{ category.name|title }}</a>
                 {% endfor %}
             </div>
 
@@ -61,10 +57,9 @@
             {% for product in products %}
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <p></p>
                         <a href="#">
                             <img class="card-img-top"
-                                 src="/static/{{ product.img }}"
+                                 src="/media/{{ product.image }}"
                                  alt="">
                         </a>
                         <div class="card-body">
