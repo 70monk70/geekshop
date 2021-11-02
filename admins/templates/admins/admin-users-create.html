@@ -1,34 +1,10 @@
-{% extends 'products/base.html' %}
-{% load static %}
-
-{% block css %}
-    <link href="{% static 'css/profile.css' %}" rel="stylesheet">
-{% endblock %}
+{% extends 'admins/base.html' %}
 
 {% block content %}
-     {% if messages or form.errors %}
-         <div class="alert {% if messages %} alert-success {% else %}alert-warning {% endif %} alert-dismissible fade show" role="alert" style="text-align: center; margin-bottom: 0px">
-         {% if messages %}
-             {% for message in messages %}
-                 {{ message }}
-             {% endfor %}
-         {% else %}
-             {% for error in form.non_field_errors %}
-                 {{ form.non_field_errors }}
-             {% endfor %}
-         {% endif %}
-         </div>
-     {% endif %}
-     <div class="container">
-        <div class="row">
-            <div class="col-lg-7">
-                <h4 class="mt-3 mb-3">Профиль</h4>
-                <div class="col-lg-12 text-center">
-                    <img width="100" height="100"
-                         src="{% if user.image %} {{ user.image.url }} {% else %} {% static 'vendor/img/users/default_avatar.jpg' %}  {% endif %}"
-                         class="img-thumbnail">
-                </div>
-                <form action="{% url 'users:profile' %}" method="post" enctype="multipart/form-data">
+            <main>
+            <div class="container-fluid">
+                <h1 class="mt-4">Создание пользователя</h1>
+                <form action="{% url 'admins:admin_users_create' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="col-lg-6">
@@ -47,9 +23,8 @@
                     <div class="form-row mb-2">
                         <div class="col-lg-12">
                             <div class="custom-file">
-                                {{ form.image }}
-                                <label class="custom-file-label" for="{{ form.image.id_for_label }}">Выберите
-                                    изображение</label>
+                                {{ form.avatar }}
+                                <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">Выберите изображение</label>
                             </div>
                         </div>
                     </div>
@@ -65,15 +40,22 @@
                         </div>
                     </div>
                     <div class="form-row">
+                        <div class="col-lg-6">
+                            <label class="small mb-1" for="{{ form.password1.id_for_label }}">Пароль</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="col-lg-6">
+                            <label class="small mb-1" for="{{ form.password2.id_for_label }}">Повторите пароль</label>
+                            {{ form.password2 }}
+                        </div>
+                    </div>
+                    <div class="form-row">
                         <div class="col-lg-12" style="margin-top: 33px;">
                             <input class="btn btn-info btn-block" type="submit" value="Сохранить">
                         </div>
                     </div>
                 </form>
             </div>
-            <div class="col-lg-5">
-                {% include 'baskets/baskets.html' %}
-            </div>
-        </div>
-    </div>
+        </main>
+
 {% endblock %}
